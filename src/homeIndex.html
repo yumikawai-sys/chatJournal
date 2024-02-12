@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Chat Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css" integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        html {
+            margin:1em;
+            background-color:grey;
+        }
+    </style>
+
+</head>
+<body>
+    <textarea cols="60" rows="20"></textarea>
+    <button>Analyse</button>
+    <div id="text_info"></div>
+
+    <script>
+        document.querySelector("button").addEventListener('click',checkResponce)
+
+        async function checkResponce()
+        {
+            let chatResp = await chatJournal(document.querySelector("textarea").value)
+            await console.log('chatResp', chatResp);
+
+            document.querySelector("#text_info").innerHTML = `<table border=1><tr><th>Object type</th><th>Value</th><th>Probability</th></tr>
+                <tr><td colspan=3>${tableRows}</td></tr>
+                </table>`
+            
+        }
+
+
+        async function chatJournal(txt)
+        {
+            console.log('txt',txt);
+            url = `http://127.0.0.1:5000/${txt}`
+            console.log('url', url)
+            resp = await fetch(url)
+            json = await resp.json()
+            return(JSON.stringify(json))
+        }
+
+
+    </script>
+</body>
+</html>
