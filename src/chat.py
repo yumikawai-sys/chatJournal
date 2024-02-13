@@ -19,7 +19,8 @@ def analyse_text(input_text):
     print('Sentiment analysis completed. Label:', sentiment_label, 'Score:', sentiment_score)
     json_result = {
         "sentiment_label" : sentiment_label,
-        "sentiment_score" : sentiment_score
+        "sentiment_score" : sentiment_score,
+        "input_text":input_text
     }
 
     # GPT2 for text generation

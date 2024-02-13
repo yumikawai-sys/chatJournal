@@ -1,0 +1,113 @@
+/* Top Menu */
+.topMenu {
+    height: 6%;
+}
+
+/* Calendar */
+.calMain {
+    width: 440px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid black;
+    height: 660px;
+    margin-right: 20px;
+}
+
+/* Input */
+.inputArea {
+    width: 900px;
+    padding: 0;
+    margin: 0;
+    /* border: 1px solid black; */
+    height: 660px;
+}
+
+.resArea {
+    height: 570px;
+    padding-top: 20px;
+}
+.inputText {
+    height: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #e6d3d1;
+}
+
+textarea {
+    height: 40px;
+    border: 1px solid #f1968c;
+    transition: border-color 0.3s;
+    border-radius: 12px;
+}
+textarea:focus {
+    border: 1px solid #f1968c;
+    outline: none;
+}
+textarea:hover {
+    border: 1px solid #f1968c;
+}
+
+.writeBtn {
+    background-color: #f1968c;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    border: 1px solid #f1968c;
+    outline: none;
+}
+
+.writeBtn:focus {
+    border: 1px solid #f1968c;
+    outline: none;
+}
+
+.writeBtn:hover {
+    border: 1px solid #f1968c;
+    outline: none;
+}
+
+.firstArea {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+}
+
+.secondArea {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+}
+
+.thirdArea {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+}
+
+#greeting_info {
+    background-color: #f1968c;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    align-self: flex-start;
+}
+
+#text_info {
+    background-color: white;
+    color: #1a39a9;
+    font-weight: 1000;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    align-self: flex-end;
+}
