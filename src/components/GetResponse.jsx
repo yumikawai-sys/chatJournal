@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import '@huggingface/transformers';
-import { GPT2Tokenizer, GPT2LMHeadModel } from '@huggingface/transformers';
 import './component.css';
 import { greetings, positiveRes, neutralRes, negativeRes } from './greeting';
+import SummaryModal from './SummaryModal'; // Import the SummaryModal component
+
 
 function GetResponse() {
     // 1st, 2nd, 3rd text (for fetch)
@@ -33,7 +33,13 @@ function GetResponse() {
     const [resSecond, setresSecond] = useState("");
     const [resThird, setresThird] = useState("");
 
-    // const [summary, setSummary] = useState("");
+    // Modal
+    const [showSummaryModal, setShowSummaryModal] = useState(false);
+    const [summaryText, setSummaryText] = useState("");
+
+    const handleCloseSummaryModal = () => {
+        setShowSummaryModal(false);
+    };
 
     useEffect(()=>{getRandomMessage("original")} , []);
 
@@ -129,23 +135,19 @@ function GetResponse() {
         }
         
         try {
-            let resp = await fetch(`http://127.0.0.1:5000/${txt}`) 
+            let resp = await fetch(`http://127.0.0.1:5000/${txt}`, {
+            method: 'POST'})
             const json = await resp.json()
             console.log('json', json);
 
-            // change destination depending on the order of input
-            console.log('resFirst', resFirst);
-            console.log('resSecond', resSecond);
-            console.log('resThird', resThird);
-            
             // Responses
             if (!resFirst && !resSecond && !resThird) {
                 // Save json
                 setresFirst(json)
 
-                if (json.sentiment_label === "POSITIVE") {
+                if (json[0].sentiment_label === "POSITIVE") {
                     setMessage(fpmessage);
-                } else if (json.sentiment_label === "NEGATIVE") {
+                } else if (json[0].sentiment_label === "NEGATIVE") {
                     setMessage(fngmessage);
                 } else 
                     setMessage(fnumessage);
@@ -154,48 +156,37 @@ function GetResponse() {
                 // Save json
                 setresSecond(json)
 
-                if (json.sentiment_label === "POSITIVE") {
+                if (json[1].sentiment_label === "POSITIVE") {
                     setSMessage(spmessage);
-                } else if (smessage.sentiment_label === "NEGATIVE") {
+                } else if (json[1].sentiment_label === "NEGATIVE") {
                     setSMessage(sngmessage);
                 } else 
                     setSMessage(snumessage);
             } 
             else if (!resThird) {
+                console.log('showModal')
                 // Save json
                 setresThird(json)
 
-                // Make a summary
-                const alltext = textValue + textsValue + texttValue;
-                summarizeMessages(alltext);
-
+                // Set Summary
+                setShowSummaryModal(true)
+                setSummaryText(json[0].summary)
             }
-            // Clear all
-            // setTextInput("");
-            // setSTextInput("");
-            // setTTextInput("");
+            
 
         } catch (error) {
             console.error('Error fetching data:', error);
         } 
     }
 
-    async function summarizeMessages(txt) {
-        // Tokenizer and Model from Hugging Face Transformers library
-        const tokenizer = new GPT2Tokenizer.fromPretrained('gpt2');
-        const model = new GPT2LMHeadModel.fromPretrained('gpt2');
-
-        // Tokenize and generate summary
-        const inputs = tokenizer.encode(txt, { return_tensors: 'pt' });
-        const outputs = await model.generate(inputs, { max_length: 50, min_length: 10, length_penalty: 2.0, num_beams: 4 });
-
-        const summarizedResult = tokenizer.decode(outputs[0], { skipSpecialTokens: true });
-        console.log('Summarized Result:', summarizedResult);
-    }
-
     async function checkResponce()
     {
         if (!textInput && !textsInput && !texttInput) return
+
+        // Set value for display
+        setValue(textInput);
+        setSValue(textsInput);
+        setTValue(texttInput);
 
         try {
             await fetchPipeline();
@@ -203,13 +194,10 @@ function GetResponse() {
             console.error('Error fetching data:', error);
           }
         
-          // Set value for display
-          setValue(textInput);
-          setSValue(textsInput);
-          setTValue(texttInput);
     }
 
     return (
+    <>
       <div className="inputArea">
         <div className="resArea">
             {/* 1st */}
@@ -244,6 +232,14 @@ function GetResponse() {
             <button className="writeBtn" onClick={checkResponce}>+</button>
         </div>
       </div>
+
+        {/* Summary Modal */}
+        <SummaryModal
+            show={showSummaryModal}
+            summary={summaryText}
+            onClose={handleCloseSummaryModal}
+        />
+    </>
     )
   }
   

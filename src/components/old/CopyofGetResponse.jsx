@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import './component.css';
-import { greetings, positiveRes, neutralRes, negativeRes } from './greeting';
+import { greetings, positiveRes, neutralRes, negativeRes } from '../greeting';
 
 function GetResponse() {
     // 1st, 2nd, 3rd text (for fetch)

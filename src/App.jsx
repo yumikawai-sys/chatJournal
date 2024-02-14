@@ -1,14 +1,19 @@
 import './App.css'
+import { useRef } from 'react'
 import GetResponse from './components/GetResponse'
 import TopMenu from './components/TopMenu'
 import SideCalendar from './components/SideCalendar'
-// import InputMessage from './components/InputMessage'
 
 function App() {
+  const homeRef = useRef()
+  const historyRef = useRef()
+  const statsRef = useRef()
+  const eventRef = useRef()
+
 
   return (
     <>
-      <TopMenu />
+      <TopMenu home={homeRef} history={historyRef} stats={statsRef} event={eventRef} />
       <div className='Main'>
         <SideCalendar />
         <div className='InputSection'>
