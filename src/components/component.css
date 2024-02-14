@@ -6,6 +6,25 @@
     margin: 0;
     background-color: #e6d3d1;
 }
+.menuUl {
+    margin: 30px 0 50px -40px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#menult {
+    margin-top: 30px;
+    width: 280px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #a0726d;
+    color: white;
+    font-size: 28px;
+    text-align: center;
+}
 
 /* Calendar */
 .calendar {
@@ -26,12 +45,12 @@
     padding: 0;
     margin: 0;
     /* border: 1px solid black; */
-    height: 660px;
+    height: 100vh;
 }
 
 .resArea {
-    height: 570px;
-    padding-top: 20px;
+    height: 620px;
+    /* padding-top: 20px; */
 }
 .inputText {
     height: 70px;
@@ -75,7 +94,7 @@ textarea:hover {
 }
 
 .firstArea {
-    height: 180px;
+    height: 190px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -84,7 +103,7 @@ textarea:hover {
 }
 
 .secondArea {
-    height: 180px;
+    height: 190px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -93,7 +112,7 @@ textarea:hover {
 }
 
 .thirdArea {
-    height: 180px;
+    height: 190px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -104,6 +123,7 @@ textarea:hover {
 #greeting_info {
     background-color: #f1968c;
     color: white;
+    font-size: 18px;
     padding: 20px;
     border-radius: 12px;
     align-self: flex-start;
@@ -175,7 +195,7 @@ textarea:hover {
     background-color: #e6d3d1;
     color: #1a39a9;
     font-size: 40px;
-    padding: 10px;
+    padding: 20px;
 }
 
 #closeBtn {

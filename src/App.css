@@ -8,6 +8,7 @@
 /* Main */
 .Main {
   display: flex;
+  height: 100vh;
 }
 /* InputComponent */
 /* .inputArea {

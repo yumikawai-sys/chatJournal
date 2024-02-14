@@ -1,10 +1,10 @@
 import './component.css'
-
+import PropTypes from "prop-types";
 import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-const SideCalendar = () => {
+const SideCalendar = ({diary, stats}) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date) => {
@@ -13,10 +13,23 @@ const SideCalendar = () => {
     console.log('Selected Date:', date);
   };
 
+  const goTo = (reference) => {
+    window.scrollTo({
+      top: reference.current.offsetTop - 50,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <div>
       <div className='calendar'>
-        {/* <h2>My Calendar</h2> */}
+        <div className='calendarfc'>
+          <ul className="menuUl" style={{ listStyle:'none'}}>
+              <li id="menult" onClick={(e)=> {e.preventDefault(); goTo(diary)}}>Diary</li>
+              <li id="menult" onClick={(e)=> {e.preventDefault(); goTo(stats)}}>Stats</li>
+          </ul>
+        </div>
+
         <Calendar
           onChange={handleDateChange}
           value={selectedDate}
@@ -27,6 +40,10 @@ const SideCalendar = () => {
   );
 };
 
+SideCalendar.propTypes = {
+  diary: PropTypes.any.isRequired,
+  stats: PropTypes.any.isRequired,
+};
 export default SideCalendar;
 
   

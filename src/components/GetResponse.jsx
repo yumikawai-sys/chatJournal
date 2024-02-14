@@ -166,11 +166,11 @@ function GetResponse() {
             else if (!resThird) {
                 console.log('showModal')
                 // Save json
-                setresThird(json)
+                setresThird(json);
 
                 // Set Summary
-                setShowSummaryModal(true)
-                setSummaryText(json[0].summary)
+                setShowSummaryModal(true);
+                setSummaryText(textInput + " " + textsInput + " " + texttInput);
             }
             
 

@@ -1,16 +1,30 @@
 from transformers import pipeline
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from db import app, mongo
+from collections import Counter
+from pymongo import MongoClient
+from flask_pymongo import PyMongo
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+mongo_uri = os.getenv("MONGO_URI")
 
 app = Flask(__name__)
 CORS(app)
 
-# Lists to store input texts for sentiment analysis
-texts_for_sentiment = []
+# Initialize PyMongo with the app and the MongoDB URI
+mongo = PyMongo(app, uri=mongo_uri)
+print('mongo', mongo)
+print('mongo_uri', mongo_uri)
+
+# List to store to return result
+result = []
 
 @app.route("/<input_text>", methods=['POST'])
 def analyse_text(input_text):
-    global texts_for_sentiment
+    global result
 
     print('Received request for sentiment analysis. Input text:', input_text)
 
@@ -21,38 +35,53 @@ def analyse_text(input_text):
     sentiment_score = float(sentiment_result[0]['score'])
     print('Sentiment analysis completed. Label:', sentiment_label, 'Score:', sentiment_score)
 
-    # Accumulate the sentiment result for this text
-    texts_for_sentiment.append({
+    # Add all results (*return to client)
+    result.append({
         "sentiment_label": sentiment_label,
         "sentiment_score": sentiment_score,
-        "input_text": input_text
+        "input_text": input_text,
     })
 
-    # Check if three input texts are received
-    if len(texts_for_sentiment) == 3:
-        # Perform summarization on the combined texts
-        # combined_texts = '\n'.join(texts_for_sentiment)
-        combined_texts = ' '.join([text['input_text'] for text in texts_for_sentiment])
-        summarizer = pipeline("summarization")
-        summarized_result = summarizer(combined_texts, max_length=100, min_length=10, length_penalty=2.0, num_beams=4)
-        summary = summarized_result[0]['summary_text']
-        print('Text summarization completed. Summary:', summary)
+    print('result', len(result))
 
-        # Prepare JSON response for sentiment and summarization results
-        json_result = [{
-            "sentiment_results": texts_for_sentiment,
-            "summary": summary
-        }]
+    # Save mongoDB
+    if len(result) == 3:
 
-        # Reset the texts_for_sentiment list
-        texts_for_sentiment = []
+        required_keys = {'sentiment_label', 'sentiment_score', 'input_text'}
+        if all(set(entry.keys()) == required_keys for entry in result):
+            # Data for MongoDB
+            # Find the most common sentiment-label
+            label = [entry['sentiment_label'] for entry in result]
+            counter = Counter(label)
+            common_element = counter.most_common(1)[0][0]
 
-        print('Sending JSON response for sentiment and summarization:', json_result)
-        return jsonify(json_result)
+            # Sentiment score
+            score = sum(entry['sentiment_score'] for entry in result) / 3
 
-    else:
-        # return jsonify({"message": f"Received {len(texts_for_sentiment)} texts. Waiting for more."})
-        return jsonify(texts_for_sentiment)
-    
+            # All text
+            dbText = ''.join(entry['input_text'] for entry in result)
+            db_result = {
+                "sentiment_label": common_element,
+                "sentiment_score": score,
+                "input_text": dbText,
+            }
+
+            print('db_result', db_result)
+
+            # Connect & save to DB with error handling
+            try:
+                with app.app_context():
+                    db = mongo.db
+                    collection = db["journals"]
+                    collection.insert_one(db_result)
+                    result.clear()
+                print('Data saved to MongoDB successfully.')
+            except Exception as e:
+                print(f'Error saving data to MongoDB: {str(e)}')
+        else:
+            print('Error: Missing required keys in result entries.')
+
+    return jsonify(result)
+
 if __name__ == "__main__":
     app.run(debug=True)
