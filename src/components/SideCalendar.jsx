@@ -15,12 +15,14 @@ const SideCalendar = () => {
 
   return (
     <div>
-      <h2>My Calendar</h2>
-      <Calendar
-        onChange={handleDateChange}
-        value={selectedDate}
-        className="small-calendar"
-      />
+      <div className='calendar'>
+        {/* <h2>My Calendar</h2> */}
+        <Calendar
+          onChange={handleDateChange}
+          value={selectedDate}
+          className="small-calendar"
+        />
+      </div>
     </div>
   );
 };

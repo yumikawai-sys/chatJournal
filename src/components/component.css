@@ -111,3 +111,41 @@ textarea:hover {
     border-radius: 12px;
     align-self: flex-end;
 }
+
+/* Calendar */
+.calendar {
+    padding: 0 40px;
+    margin-right: 100px;
+}
+
+.react-calendar,
+.react-calendar__month-view {
+    background-color: #fff2ec;
+}
+
+.react-calendar__navigation {
+    background-color: #fff2ec;
+    margin: 0;
+}
+
+.react-calendar__tile--active {
+    background-color: #fff2ec;
+    color: white;
+}
+
+.react-calendar__tile--now {
+    background-color: #fff2ec;
+}
+
+/* Remove outline from the calendar */
+.react-calendar,
+.react-calendar:focus,
+.react-calendar * {
+    outline: none !important;
+    border: none !important;
+}
+
+/* Optional: Remove border from the active date tile */
+.react-calendar__tile--active {
+    border: none !important;
+}

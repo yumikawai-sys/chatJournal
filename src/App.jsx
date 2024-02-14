@@ -13,7 +13,6 @@ function App() {
         <SideCalendar />
         <div className='InputSection'>
           <GetResponse />
-          {/* <InputMessage /> */}
         </div>
       </div>
     </>

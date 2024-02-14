@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import '@huggingface/transformers';
-import { GPT2Tokenizer, GPT2LMHeadModel } from '@huggingface/transformers';
 import './component.css';
 import { greetings, positiveRes, neutralRes, negativeRes } from './greeting';
 
@@ -32,8 +30,6 @@ function GetResponse() {
     const [resFirst, setresFirst] = useState("");
     const [resSecond, setresSecond] = useState("");
     const [resThird, setresThird] = useState("");
-
-    // const [summary, setSummary] = useState("");
 
     useEffect(()=>{getRandomMessage("original")} , []);
 
@@ -164,11 +160,6 @@ function GetResponse() {
             else if (!resThird) {
                 // Save json
                 setresThird(json)
-
-                // Make a summary
-                const alltext = textValue + textsValue + texttValue;
-                summarizeMessages(alltext);
-
             }
             // Clear all
             // setTextInput("");
@@ -178,19 +169,6 @@ function GetResponse() {
         } catch (error) {
             console.error('Error fetching data:', error);
         } 
-    }
-
-    async function summarizeMessages(txt) {
-        // Tokenizer and Model from Hugging Face Transformers library
-        const tokenizer = new GPT2Tokenizer.fromPretrained('gpt2');
-        const model = new GPT2LMHeadModel.fromPretrained('gpt2');
-
-        // Tokenize and generate summary
-        const inputs = tokenizer.encode(txt, { return_tensors: 'pt' });
-        const outputs = await model.generate(inputs, { max_length: 50, min_length: 10, length_penalty: 2.0, num_beams: 4 });
-
-        const summarizedResult = tokenizer.decode(outputs[0], { skipSpecialTokens: true });
-        console.log('Summarized Result:', summarizedResult);
     }
 
     async function checkResponce()
