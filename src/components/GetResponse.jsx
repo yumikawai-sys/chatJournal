@@ -228,7 +228,7 @@ function GetResponse() {
                 ? texttInput
                 :""
                 } 
-                onChange={saveInput} cols="90" rows="2"></textarea>
+                onChange={saveInput} cols="70" rows="1"></textarea>
             <button className="writeBtn" onClick={checkResponce}>+</button>
         </div>
       </div>

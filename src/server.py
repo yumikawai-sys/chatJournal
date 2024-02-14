@@ -1,7 +1,7 @@
 from transformers import pipeline
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from db import app, mongo
+# from db import app, mongo
 from collections import Counter
 from pymongo import MongoClient
 from flask_pymongo import PyMongo
@@ -9,15 +9,18 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+
 mongo_uri = os.getenv("MONGO_URI")
+mongo_dbname = 'journaldb'
 
 app = Flask(__name__)
 CORS(app)
 
-# Initialize PyMongo with the app and the MongoDB URI
-mongo = PyMongo(app, uri=mongo_uri)
-print('mongo', mongo)
-print('mongo_uri', mongo_uri)
+# Connect to MongoDB using MongoClient
+client = MongoClient(mongo_uri)
+
+# Specify the database
+db = client[mongo_dbname]
 
 # List to store to return result
 result = []
@@ -59,7 +62,7 @@ def analyse_text(input_text):
             score = sum(entry['sentiment_score'] for entry in result) / 3
 
             # All text
-            dbText = ''.join(entry['input_text'] for entry in result)
+            dbText = ' '.join(entry['input_text'] for entry in result)
             db_result = {
                 "sentiment_label": common_element,
                 "sentiment_score": score,
@@ -70,12 +73,16 @@ def analyse_text(input_text):
 
             # Connect & save to DB with error handling
             try:
-                with app.app_context():
-                    db = mongo.db
-                    collection = db["journals"]
-                    collection.insert_one(db_result)
-                    result.clear()
+                print('Attempting to save data to MongoDB...')
+
+                # db = mongo.cx.get_database()
+                collection = db["journals"]
+
+                print('db_result before insertion:', db_result)
+                collection.insert_one(db_result)
+                result.clear()
                 print('Data saved to MongoDB successfully.')
+
             except Exception as e:
                 print(f'Error saving data to MongoDB: {str(e)}')
         else:

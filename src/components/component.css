@@ -65,6 +65,8 @@ textarea {
     border: 1px solid #f1968c;
     transition: border-color 0.3s;
     border-radius: 12px;
+    font-size: 18px;
+    padding: 5px;
 }
 textarea:focus {
     border: 1px solid #f1968c;
