@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-const SideCalendar = ({diary, stats}) => {
+const SideCalendar = ({home, diary, stats}) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date) => {
@@ -25,6 +25,7 @@ const SideCalendar = ({diary, stats}) => {
       <div className='calendar'>
         <div className='calendarfc'>
           <ul className="menuUl" style={{ listStyle:'none'}}>
+              <li id="menult" onClick={(e)=> {e.preventDefault(); goTo(home)}}>Home</li>
               <li id="menult" onClick={(e)=> {e.preventDefault(); goTo(diary)}}>Diary</li>
               <li id="menult" onClick={(e)=> {e.preventDefault(); goTo(stats)}}>Stats</li>
           </ul>
@@ -41,6 +42,7 @@ const SideCalendar = ({diary, stats}) => {
 };
 
 SideCalendar.propTypes = {
+  home: PropTypes.any.isRequired,
   diary: PropTypes.any.isRequired,
   stats: PropTypes.any.isRequired,
 };

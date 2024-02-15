@@ -201,20 +201,20 @@ function GetResponse() {
       <div className="inputArea">
         <div className="resArea">
             {/* 1st */}
-            <div className="firstArea">
+            <div className={`firstArea ${resFirst ? 'fade-in show' : ''}`}>
                 <div id="greeting_info">{originalmessage}</div>
-                {resFirst && <div id="text_info">{textValue}</div>}
+                {resFirst && <div id="text_info" className={`fade-in show`}>{textValue}</div>}
             </div>
             {/* 2nd */}
-            <div className="secondArea">
+            <div className={`secondArea ${resSecond ? 'fade-in show' : ''}`}>
                 {resFirst && <div id="greeting_info">{message}</div>}
-                {resSecond && <div id="text_info">{textsValue}</div>}
+                {resSecond && <div id="text_info" className={`fade-in show`}>{textsValue}</div>}
 
             </div>
             {/* 3rd */}
-            <div className="thirdArea">
+            <div className={`thirdArea ${resThird ? 'fade-in show' : ''}`}>
                 {resSecond&& <div id="greeting_info">{smessage}</div>}
-                {resThird&& <div id="text_info">{texttValue}</div>}
+                {resThird&& <div id="text_info" className={`fade-in show`}>{texttValue}</div>}
             </div>
         </div>
 

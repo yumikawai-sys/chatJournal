@@ -1,20 +1,23 @@
 import './App.css'
-import { useRef } from 'react'
+// import { useRef } from 'react'
 import GetResponse from './components/GetResponse'
-// import TopMenu from './components/TopMenu'
 import SideCalendar from './components/SideCalendar'
+import Toppage from './components/Toppage'
+import Calendar from './components/Calendar'
+import Stats from './components/Stats'
 
 function App() {
-  const diaryRef = useRef()
-  const statsRef = useRef()
-
+  
   return (
     <>
-      {/* <TopMenu diary={diaryRef} stats={statsRef}  /> */}
+      <Toppage />
       <div className='Main'>
-        <SideCalendar diary={diaryRef} stats={statsRef} />
+        <SideCalendar />
         <div className='InputSection'>
+          
           <GetResponse />
+          <Calendar />
+          <Stats />
         </div>
       </div>
     </>

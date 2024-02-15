@@ -1,13 +1,15 @@
 import './component.css'
 
-function InputMessage() {
+function Stats() {
     // const [count, setCount] = useState(0)
   
     return (
       <>
-        <div>input message</div>
+        <div>
+          stats
+        </div>
       </>
     )
   }
   
-  export default InputMessage
+  export default Stats

@@ -7,6 +7,8 @@ from pymongo import MongoClient
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import os
+import requests
+
 
 load_dotenv()
 
@@ -90,5 +92,15 @@ def analyse_text(input_text):
 
     return jsonify(result)
 
+@app.route("/api/quotes", methods=['GET'])
+def get_quotes():
+    try:
+        # Make the request to the external API
+        response = requests.get('https://zenquotes.io/api/today')
+        json_data = response.json()
+        return jsonify(json_data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
 if __name__ == "__main__":
     app.run(debug=True)
