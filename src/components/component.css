@@ -1,13 +1,44 @@
+.topbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#toplogo {
+    width: 80px;
+    margin: 0 80px 0 0;
+}
+
 h3 {
     display: block;
+    text-align: left;
   }
 
-#topImage {
+.topimages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 0 0;
+}
+#topImagel {
+    width: 18%
+}
+#topImagem {
     width: 32%
+}
+#topImager {
+    width: 18%
+}
+
+.bottomArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #startBtn {
-    margin-top: 30px;
+    margin-top: 10px;
     width: 280px;
     height: 40px;
     border-radius: 8px;
@@ -26,7 +57,7 @@ h3 {
     background-color: #e6d3d1;
 }
 .menuUl {
-    margin: 30px 0 50px -40px;
+    margin: 10px 0 50px -40px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -35,14 +66,15 @@ h3 {
 }
 
 #menult {
-    margin-top: 30px;
+    margin-top: 10px;
     width: 280px;
     height: 40px;
     border-radius: 8px;
     background-color: #a0726d;
     color: white;
-    font-size: 28px;
+    font-size: 20px;
     text-align: center;
+    border: white;
 }
 
 /* Calendar */
@@ -57,14 +89,21 @@ h3 {
     height: 660px;
     margin-right: 20px;
 }
-
+.menuName {
+    width: 100%;
+    text-align: left;
+    margin-left: 10px;
+}
+svg {
+    margin-right: 20px;
+}
 /* Input */
 .inputArea {
     width: 900px;
     padding: 0;
     margin: 0;
     /* border: 1px solid black; */
-    height: 100vh;
+    height: 720px;
 }
 
 .resArea {
@@ -171,6 +210,41 @@ textarea:hover {
     transform: translateY(0);
 }
 
+/* Apply initial styles for hidden state */
+.slow-in {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+}
+
+/* Apply styles when the 'show' class is added */
+.slow-in.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* History */
+#history_info {
+    background-color: white;
+    color: #1a39a9;
+    font-weight: 1000;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    align-self: flex-end;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.pageBtn {
+    background-color: #f1968c;
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid #f1968c;
+    outline: none;
+}
 
 /* Calendar */
 .calendar {

@@ -1,13 +1,14 @@
 from transformers import pipeline
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 from flask_cors import CORS
 # from db import app, mongo
 from collections import Counter
 from pymongo import MongoClient
-from flask_pymongo import PyMongo
+# from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import os
 import requests
+from datetime import datetime
 
 
 load_dotenv()
@@ -70,7 +71,8 @@ def analyse_text(input_text):
                 "sentiment_score": score,
                 "input_text": dbText,
             }
-
+            today_date = datetime.now().strftime('%m%d%Y')
+            db_result["date"] = today_date
             print('db_result', db_result)
 
             # Connect & save to DB with error handling
@@ -92,6 +94,7 @@ def analyse_text(input_text):
 
     return jsonify(result)
 
+# get today's message from API
 @app.route("/api/quotes", methods=['GET'])
 def get_quotes():
     try:
@@ -101,6 +104,24 @@ def get_quotes():
         return jsonify(json_data)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
+
+# Get from MongoDB
+@app.route("/api/journals", methods=['GET'])
+def get_journals():
+    try:
+        # Fetch all documents from the 'journals' collection
+        journals = list(db["journals"].find().sort("date", -1))
+
+        # Convert ObjectId to str for JSON serialization
+        for journal in journals:
+            journal['_id'] = str(journal['_id'])
+            formatted_date = datetime.strptime(journal['date'], '%m%d%Y').strftime('%b %d, %Y')
+            journal['formatted_date'] = formatted_date
+
+        return jsonify(journals)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == "__main__":
     app.run(debug=True)

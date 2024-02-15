@@ -1,5 +1,6 @@
 import './component.css'
 import { useState, useEffect } from 'react';
+import { useNavigate  } from 'react-router-dom';
 
 function Toppage() {
     const [response, setResponse] = useState("");
@@ -16,9 +17,6 @@ function Toppage() {
         }
     
         const resJson = await res.json();
-        console.log('resJson', resJson);
-        console.log('response.q', response.q);
-        console.log('response.a', response.a);
         setResponse(resJson[0]);
         setLoading(false);
       } catch (error) {
@@ -26,21 +24,34 @@ function Toppage() {
       }
     }
 
+    const navigate = useNavigate();
+
+    const navigateToGetResponse = () => {
+      navigate('/getResponse');
+    };
+
     return (
       <div>
         <div>
-          <h3>Welcome back, you are amazing today... <br></br>Journal will help you understand yourself, heal you and move forward</h3>
-          <img id="topImage" src="toppage.png" />
-          {/* <p>Your Inspration</p> */}
-          {loading ? (
-            <p>Loading...</p>
-            ) : (
-              <>
-              <p>{response.q}</p>
-              <p>{response.a}</p>
-              </>
-             )}
-           <button id="startBtn">Start</button>
+          <div className='topbar'>
+            <img id="toplogo" src="logo.png" />
+            <h3>Welcome back, you are amazing today... <br></br>3 Things Journal will help you reflect the day and move forward</h3>
+          </div>
+          <div className='topimages'>
+            <img className='slow-in show' id="topImagel" src="topred.png" />
+            <img className='slow-in show' id="topImagem" src="toppage.png" />
+            <img className='slow-in show' id="topImager" src="topyellow.png" />
+          </div>
+          <div className='bottomArea'>
+            {loading ? (
+              <p className='slow-in show'>Loading...</p>
+              ) : (
+                <>
+                <p className='slow-in show'>{response.q} <br></br>{response.a}</p>
+                </>
+              )}
+            <button id="startBtn" className='slow-in show' onClick={navigateToGetResponse}>Start</button>
+           </div>
         </div>
       </div>
     )
