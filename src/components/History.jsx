@@ -23,7 +23,6 @@ function History() {
     indexOfLastItem = currentPage * itemsPerPage;
     indexOfFirstItem = indexOfLastItem - itemsPerPage;
     currentItems = journals.slice(indexOfFirstItem, indexOfLastItem);
-    console.log('currentItems', currentItems);
   }
  
 

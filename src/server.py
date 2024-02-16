@@ -137,17 +137,18 @@ def get_journal(current_date):
     try:
         # Fetch one collection based on the provided date
         journal = db["journals"].find_one({"date": current_date})
-
+        print('current_date', current_date)
+        print('journal', [journal])
         # If a journal is found, format the date and convert ObjectId to str
         if journal:
             journal['_id'] = str(journal['_id'])
             formatted_date = datetime.strptime(journal['date'], '%m%d%Y').strftime('%b %d, %Y')
             journal['formatted_date'] = formatted_date
 
-            return jsonify(journal)
+            return jsonify([journal])
         else:
             # Return a 200 OK with a custom message for no data
-            return jsonify({'message': 'None'}), 200
+            return jsonify([]), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500

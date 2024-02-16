@@ -4,6 +4,7 @@ import SideCalendar from './components/SideCalendar';
 import GetResponse from './components/GetResponse';
 import History from './components/History';
 import Stats from './components/Stats';
+import MyCalendar from './components/MyCalendar';
 import './App.css'
 
 // Import necessary dependencies
@@ -55,6 +56,14 @@ function App() {
             </SharedLayout>
           }
         />
+        <Route
+          path="/calendar/:current_date"
+          element={
+            <SharedLayout>
+              <MyCalendar />
+            </SharedLayout>
+          }
+        />
       </Routes>
     </Router>
   );
@@ -62,29 +71,3 @@ function App() {
 
 export default App;
 
-// function App() {
-//   return (
-//     <Router>
-//       <>
-//         <Routes>
-//           <Route path="/" element={<Toppage />}>
-//             <Route index element={<SideCalendar />} />
-//           </Route>
-//           <Route path="/getResponse" element={<GetResponse />} />
-//           <Route path="/calendar" element={<Calendar />} />
-//           <Route path="/stats" element={<Stats />} />
-//           {/* <div className='Main'>
-//             <SideCalendar />
-//             <div className='InputSection'>
-//                 <Route path="/getResponse" component={GetResponse} />
-//                 <Route path="/calendar" component={Calendar} />
-//                 <Route path="/stats" component={Stats} />
-//             </div>
-//           </div> */}
-//         </Routes>
-//       </>
-//     </Router>
-//   );
-// }
-
-// export default App;
