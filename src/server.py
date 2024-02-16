@@ -21,6 +21,8 @@ CORS(app)
 
 # Connect to MongoDB using MongoClient
 client = MongoClient(mongo_uri)
+print('mongo_uri', mongo_uri)
+print('client', client)
 
 # Specify the database
 db = client[mongo_dbname]

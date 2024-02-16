@@ -4,8 +4,6 @@ import './component.css';
 function History() {
   const [journals, setJournals] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [indexOfLastItem, setIndexOfLastItem] = useState(1);
-  const [currentItems, setCurrentItems] = useState([]);
   const itemsPerPage = 3;
 
   useEffect(() => {
@@ -16,13 +14,19 @@ function History() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
-    // Calculate the index range for the current page
-  if (!journals) {
-    setIndexOfLastItem(currentPage * itemsPerPage);
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    setCurrentItems(journals.slice(indexOfFirstItem, indexOfLastItem));
+  // Calculate the index range for the current page
+  let indexOfLastItem = 0;
+  let indexOfFirstItem = 0;
+  let currentItems = [];
+
+  if (journals) {  // Check if journals is truthy before accessing it
+    indexOfLastItem = currentPage * itemsPerPage;
+    indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    currentItems = journals.slice(indexOfFirstItem, indexOfLastItem);
+    console.log('currentItems', currentItems);
   }
-  
+ 
+
   return (
     <>
       <div className="inputArea">
