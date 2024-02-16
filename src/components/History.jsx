@@ -4,6 +4,8 @@ import './component.css';
 function History() {
   const [journals, setJournals] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [indexOfLastItem, setIndexOfLastItem] = useState(1);
+  const [currentItems, setCurrentItems] = useState([]);
   const itemsPerPage = 3;
 
   useEffect(() => {
@@ -15,10 +17,12 @@ function History() {
   }, []);
 
     // Calculate the index range for the current page
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = journals.slice(indexOfFirstItem, indexOfLastItem);
-
+  if (!journals) {
+    setIndexOfLastItem(currentPage * itemsPerPage);
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    setCurrentItems(journals.slice(indexOfFirstItem, indexOfLastItem));
+  }
+  
   return (
     <>
       <div className="inputArea">

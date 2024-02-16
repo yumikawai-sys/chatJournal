@@ -23,7 +23,6 @@ const SideCalendar = () => {
       navigate('/');
     };
   
-
     const navigateToDiary = () => {
       navigate('/getResponse');
     };

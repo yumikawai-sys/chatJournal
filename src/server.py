@@ -24,6 +24,7 @@ client = MongoClient(mongo_uri)
 
 # Specify the database
 db = client[mongo_dbname]
+print('db', db)
 
 # List to store to return result
 result = []
@@ -106,12 +107,14 @@ def get_quotes():
         return jsonify({'error': str(e)}), 500
 
 
-# Get from MongoDB
+# Get all journals from MongoDB
 @app.route("/api/journals", methods=['GET'])
 def get_journals():
     try:
+        print('Attempting to fetch journals...')
         # Fetch all documents from the 'journals' collection
         journals = list(db["journals"].find().sort("date", -1))
+        print('Fetched journals successfully.', journals)
 
         # Convert ObjectId to str for JSON serialization
         for journal in journals:
@@ -119,7 +122,31 @@ def get_journals():
             formatted_date = datetime.strptime(journal['date'], '%m%d%Y').strftime('%b %d, %Y')
             journal['formatted_date'] = formatted_date
 
+        print('journals', journals)
         return jsonify(journals)
+    except Exception as e:
+        print(f'Error: {str(e)}')
+        return jsonify({'error': str(e)}), 500
+    
+
+# Get one journal from MongoDB
+@app.route("/api/journal/<current_date>", methods=['GET'])
+def get_journal(current_date):
+    try:
+        # Fetch one collection based on the provided date
+        journal = db["journals"].find_one({"date": current_date})
+
+        # If a journal is found, format the date and convert ObjectId to str
+        if journal:
+            journal['_id'] = str(journal['_id'])
+            formatted_date = datetime.strptime(journal['date'], '%m%d%Y').strftime('%b %d, %Y')
+            journal['formatted_date'] = formatted_date
+
+            return jsonify(journal)
+        else:
+            # Return a 200 OK with a custom message for no data
+            return jsonify({'message': 'None'}), 200
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
