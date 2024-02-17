@@ -15,7 +15,6 @@ function MyCalendar() {
         .catch(error => console.error('Error fetching data:', error));
     }, [current_date]);
 
-    
     const handleHover = () => {
       setIsOpen(!isOpen);
     };

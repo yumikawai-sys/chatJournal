@@ -5,6 +5,7 @@ import GetResponse from './components/GetResponse';
 import History from './components/History';
 import Stats from './components/Stats';
 import MyCalendar from './components/MyCalendar';
+import PropTypes from "prop-types";
 import './App.css'
 
 // Import necessary dependencies
@@ -69,5 +70,8 @@ function App() {
   );
 }
 
+SharedLayout.propTypes = {
+  children: PropTypes.any.isRequired,
+};
 export default App;
 

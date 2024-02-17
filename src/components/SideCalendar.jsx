@@ -18,7 +18,6 @@ const SideCalendar = () => {
     }).replace(/\//g, '');
 
     setSelectedDate(formattedDate);
-    console.log('Selected Date:', formattedDate);
 
     // Navigate to the /calendar/:current_date route when the date changes
     navigate(`/calendar/${formattedDate}`);

@@ -122,7 +122,6 @@ function GetResponse() {
             let resp = await fetch(`http://127.0.0.1:5000/${txt}`, {
             method: 'POST'})
             const json = await resp.json()
-            console.log('json', json);
 
             // Responses
             if (!resFirst && !resSecond && !resThird) {
@@ -148,16 +147,13 @@ function GetResponse() {
                     setSMessage(snumessage);
             } 
             else if (!resThird) {
-                console.log('showModal')
                 // Save json
                 setresThird(json);
 
                 // Set Summary
                 setShowSummaryModal(true);
                 setSummaryText(textInput + " " + textsInput + " " + texttInput);
-            }
-            
-
+            }         
         } catch (error) {
             console.error('Error fetching data:', error);
         } 
@@ -177,7 +173,6 @@ function GetResponse() {
           } catch (error) {
             console.error('Error fetching data:', error);
           }
-        
     }
 
     return (

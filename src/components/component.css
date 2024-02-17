@@ -4,6 +4,10 @@
     justify-content: center;
 }
 
+.topbar h3 {
+    color: white;
+}
+
 #toplogo {
     width: 80px;
     margin: 0 80px 0 0;
@@ -37,6 +41,9 @@ h3 {
     justify-content: center;
 }
 
+.bottomArea p {
+    color: white;
+}
 #startBtn {
     margin-top: 10px;
     width: 280px;
@@ -101,20 +108,17 @@ svg {
     width: 900px;
     padding: 0;
     margin: 0;
-    /* border: 1px solid black; */
     height: 660px;
 }
 
 .resArea {
     height: 620px;
-    /* padding-top: 20px; */
 }
 .inputText {
     height: 70px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #e6d3d1;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -212,14 +216,12 @@ textarea:hover {
     transform: translateY(0);
 }
 
-/* Apply initial styles for hidden state */
 .slow-in {
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 2s ease-in-out, transform 2s ease-in-out;
 }
 
-/* Apply styles when the 'show' class is added */
 .slow-in.show {
     opacity: 1;
     transform: translateY(0);
@@ -302,7 +304,6 @@ textarea:hover {
     transform: rotateY(270deg);
   }
   
-  
   .book-text {
     position: absolute;
     top: 20px;
@@ -317,23 +318,29 @@ textarea:hover {
   }
 
 /* React calendar (SideCalendar) */
+.react-calendar {
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
 .react-calendar,
 .react-calendar__month-view {
-    background-color: #fff2ec;
+    background-color: #c9adfd;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .react-calendar__navigation {
-    background-color: #fff2ec;
+    background-color: #c9adfd;
     margin: 0;
 }
 
 .react-calendar__tile--active {
-    background-color: #fff2ec;
+    background-color: #c9adfd;
     color: white;
 }
 
 .react-calendar__tile--now {
-    background-color: #fff2ec;
+    background-color: #c9adfd;
 }
 
 /* Remove outline from the calendar */
@@ -397,12 +404,22 @@ canvas {
 
 .piechart {
     margin-top: 20px;
-    width: 50%;
+    width: 90%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .message {
-    width: 70vw;
+    width: 90vw;
+}
+
+.feedback {
+    color: white;
+    margin-left: 100px;
+    font-size: 24px;
+    width: 250px;
+    padding: 40px;
+    border-radius: 10px;
+    background: radial-gradient(#4e1aa9, #916fd0);
 }

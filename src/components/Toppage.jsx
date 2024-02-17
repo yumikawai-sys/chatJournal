@@ -11,7 +11,6 @@ function Toppage() {
       const todayDate = new Date();
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       const newFormattedDate = todayDate.toLocaleDateString('en-US', options);
-      console.log('Formatted date:', newFormattedDate);
   
       // Update the state with the formatted date
       setFormattedDate(newFormattedDate);

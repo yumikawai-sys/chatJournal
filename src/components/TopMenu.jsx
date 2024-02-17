@@ -12,8 +12,7 @@ export default function TopMenu({home, history, stats, event}) {
 
 return (
   
-      <div className="topmenu" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-      
+      <div className="topmenu" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>    
           {/* menu items */}
           <ul style={{ display: 'flex', listStyle:'none'}}>
             <li style={{margin:'20px'}} onClick={(e)=> {e.preventDefault(); goTo(home)}}>Home</li>
@@ -21,9 +20,7 @@ return (
               <li style={{margin:'20px'}} onClick={(e)=> {e.preventDefault(); goTo(stats)}}>Stats</li>
               <li style={{margin:'20px'}} onClick={(e)=> {e.preventDefault(); goTo(event)}}>Event</li>
           </ul>
-
       </div>
-  
 )
 }
 TopMenu.propTypes = {

@@ -59,16 +59,11 @@ keyphrase_extractor = KeyphraseExtractionPipeline(model=keyphrase_model_name)
 def extract_keyphrases(input_text):
     global result_keyphrase
 
-    print('Received request for keyphrase extraction. Input text:', input_text)
-
     # Perform keyphrase extraction on the current input text
     keyphrases = keyphrase_extractor(input_text)
-    print('Keyphrases extracted:', keyphrases)
 
     # Convert NumPy array to a list
     keyphrases_list = keyphrases.tolist()
-
-    print('keyphrases_list', len(keyphrases_list))
 
     # Return the response with the converted list
     return jsonify(keyphrases_list)
@@ -81,14 +76,11 @@ result = []
 def analyse_text(input_text):
     global result
 
-    print('Received request for sentiment analysis. Input text:', input_text)
-
     # Perform sentiment analysis on the current input text
     sentiment_analysis = pipeline("sentiment-analysis")
     sentiment_result = sentiment_analysis(input_text)
     sentiment_label = sentiment_result[0]['label']
     sentiment_score = float(sentiment_result[0]['score'])
-    print('Sentiment analysis completed. Label:', sentiment_label, 'Score:', sentiment_score)
 
     # Add all results (*return to client)
     result.append({
@@ -96,8 +88,6 @@ def analyse_text(input_text):
         "sentiment_score": sentiment_score,
         "input_text": input_text,
     })
-
-    print('result', len(result))
 
     # Save mongoDB
     if len(result) == 3:
@@ -122,19 +112,13 @@ def analyse_text(input_text):
             }
             today_date = datetime.now().strftime('%m%d%Y')
             db_result["date"] = today_date
-            print('db_result', db_result)
 
             # Connect & save to DB with error handling
             try:
-                print('Attempting to save data to MongoDB...')
-
                 # db = mongo.cx.get_database()
                 collection = db["journals"]
-
-                print('db_result before insertion:', db_result)
                 collection.insert_one(db_result)
                 result.clear()
-                print('Data saved to MongoDB successfully.')
 
             except Exception as e:
                 print(f'Error saving data to MongoDB: {str(e)}')
@@ -159,10 +143,8 @@ def get_quotes():
 @app.route("/api/journals", methods=['GET'])
 def get_journals():
     try:
-        print('Attempting to fetch journals...')
         # Fetch all documents from the 'journals' collection
         journals = list(db["journals"].find().sort("date", -1))
-        print('Fetched journals successfully.', journals)
 
         # Convert ObjectId to str for JSON serialization
         for journal in journals:
@@ -170,7 +152,6 @@ def get_journals():
             formatted_date = datetime.strptime(journal['date'], '%m%d%Y').strftime('%b %d, %Y')
             journal['formatted_date'] = formatted_date
 
-        print('journals', journals)
         return jsonify(journals)
     except Exception as e:
         print(f'Error: {str(e)}')
@@ -183,8 +164,7 @@ def get_journal(current_date):
     try:
         # Fetch one collection based on the provided date
         journal = db["journals"].find_one({"date": current_date})
-        print('current_date', current_date)
-        print('journal', [journal])
+        
         # If a journal is found, format the date and convert ObjectId to str
         if journal:
             journal['_id'] = str(journal['_id'])

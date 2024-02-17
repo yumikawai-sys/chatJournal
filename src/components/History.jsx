@@ -24,7 +24,6 @@ function History() {
     indexOfFirstItem = indexOfLastItem - itemsPerPage;
     currentItems = journals.slice(indexOfFirstItem, indexOfLastItem);
   }
- 
 
   return (
     <>

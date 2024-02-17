@@ -44,5 +44,6 @@ export const negativeRes = [
     "I'm here for you. Do you want to express more?",
 ];
 
+// Memo:
 // hugging face
 // https://huggingface.co/ml6team/keyphrase-extraction-kbir-inspec

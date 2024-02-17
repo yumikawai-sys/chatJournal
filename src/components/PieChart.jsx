@@ -7,7 +7,6 @@ const PieChart = ({ keywords }) => {
 
   useEffect(() => {
     if (keywords.length === 0) return;
-    console.log('', keywords);
 
     const ctx = chartRef.current.getContext('2d');
 
@@ -21,8 +20,19 @@ const PieChart = ({ keywords }) => {
         labels: keywords,
         datasets: [{
           data: sizes,
-          backgroundColor: ['#ff9999', '#66b3ff', '#99ff99'], // Customize colors as needed
+          backgroundColor: ['#ff9999', '#66b3ff', '#99ff99', '#e4f18c', '#d98cf1', '#e6a97d'], 
         }],
+      },
+      options: {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    color: 'rgb(255, 99, 132)',
+                    fillStyle: 'white',
+                }
+            }
+        },
       },
     });
   }, [keywords]);
