@@ -8,7 +8,7 @@
 /* Main */
 .Main {
   display: flex;
-  height: 100vh;
+  height: 90%;
 }
 .inputSection {
   height: 880px;

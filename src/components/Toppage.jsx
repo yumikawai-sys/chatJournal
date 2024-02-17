@@ -45,7 +45,7 @@ function Toppage() {
         <div>
           <div className='topbar'>
             <img id="toplogo" src="logo.png" />
-            <h3>Welcome back, you are amazing today... <br></br>3 Things Journal will help you reflect the day and move forward</h3>
+            <h3>Discover unknown yourself... <br></br>AI analyzes your thoughts and emotions and gives you feedback</h3>
           </div>
           <div className='topimages'>
             <img className='slow-in show' id="topImagel" src="topred.png" />
@@ -58,7 +58,7 @@ function Toppage() {
               ) : (
                 <>
                 <p>Today is {formattedDate}</p>
-                <p className='slow-in show'>{response.q}  by {response.a}</p>
+                <p className='slow-in show'>&quot;{response.q}&quot; -  by {response.a}</p>
                 </>
               )}
             <button id="startBtn" className='slow-in show' onClick={navigateToGetResponse}>Start</button>

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import './component.css';
 import { greetings, positiveRes, neutralRes, negativeRes } from './greeting';
-import SummaryModal from './SummaryModal'; // Import the SummaryModal component
+import SummaryModal from './SummaryModal';
 
 
 function GetResponse() {
@@ -28,6 +29,12 @@ function GetResponse() {
     const [sngmessage, setsngMessage] = useState("");
     const [snumessage, setsnuMessage] = useState("");
 
+    // Navigation
+    const navigate = useNavigate();
+    const navigateToHistory = () => {
+        navigate('/history');
+      };
+
     // Save sentiment (to save for stats)
     const [resFirst, setresFirst] = useState("");
     const [resSecond, setresSecond] = useState("");
@@ -39,6 +46,7 @@ function GetResponse() {
 
     const handleCloseSummaryModal = () => {
         setShowSummaryModal(false);
+        navigateToHistory();
     };
 
     useEffect(()=>{getRandomMessage("original")} , []);
@@ -78,30 +86,6 @@ function GetResponse() {
             const selectedsneutral = neutralRes[fneutral + 1];
             setsnuMessage(selectedsneutral);
         }
-        
-        // positive greeting
-        // else if (status === "positive") {
-        //     const positivelength = positiveRes.length;
-        //     const pgreeting = Math.floor(Math.random() * positivelength);
-        //     const selectedPGreeting = positiveRes[pgreeting];
-        //     return selectedPGreeting
-        // }
-        
-        // // negative greeting
-        // else if (status === "negative") {
-        //     const nglength = negativeRes.length;
-        //     const nggreeting = Math.floor(Math.random() * nglength);
-        //     const selectedNgGreeting = negativeRes[nggreeting];
-        //     return selectedNgGreeting
-        // }
-
-        // // neutral greeting
-        // else {
-        //     const nuelength = neutralRes.length;
-        //     const ngreeting = Math.floor(Math.random() * nuelength + 1);
-        //     const selectedNGreeting = neutralRes[ngreeting];
-        //     return selectedNGreeting
-        // }
     }
     
     function saveInput(e) {

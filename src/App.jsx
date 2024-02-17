@@ -21,7 +21,7 @@ function SharedLayout({ children }) {
     <>
       <div className="Main">
         <SideCalendar />
-        <div className="InputSection" style={{ height: '800px' }}>{children}</div>
+        <div className="InputSection" style={{ height: '720px' }}>{children}</div>
       </div>
     </>
   );

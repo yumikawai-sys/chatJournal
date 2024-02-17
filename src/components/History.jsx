@@ -4,7 +4,7 @@ import './component.css';
 function History() {
   const [journals, setJournals] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
+  const itemsPerPage = 4;
 
   useEffect(() => {
     // Fetch data from the Flask API endpoint

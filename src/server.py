@@ -1,14 +1,21 @@
-from transformers import pipeline
-from flask import Flask, jsonify
+from transformers import pipeline, AutoModelForSequenceClassification, AutoTokenizer
+from flask import Flask, jsonify, request
 from flask_cors import CORS
-# from db import app, mongo
-from collections import Counter
 from pymongo import MongoClient
-# from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import os
-import requests
 from datetime import datetime
+from collections import Counter
+import requests
+
+from transformers import (
+    TokenClassificationPipeline,
+    AutoModelForTokenClassification,
+    AutoTokenizer,
+)
+from transformers.pipelines import AggregationStrategy
+import numpy as np
+from flask_cors import cross_origin
 
 
 load_dotenv()
@@ -21,13 +28,52 @@ CORS(app)
 
 # Connect to MongoDB using MongoClient
 client = MongoClient(mongo_uri)
-print('mongo_uri', mongo_uri)
-print('client', client)
-
-# Specify the database
 db = client[mongo_dbname]
-print('db', db)
 
+result_sentiment = []
+result_keyphrase = []
+
+# Define keyphrase extraction pipeline
+class KeyphraseExtractionPipeline(TokenClassificationPipeline):
+    def __init__(self, model, *args, **kwargs):
+        super().__init__(
+            model=AutoModelForTokenClassification.from_pretrained(model),
+            tokenizer=AutoTokenizer.from_pretrained(model),
+            *args,
+            **kwargs
+        )
+
+    def postprocess(self, all_outputs):
+        results = super().postprocess(
+            all_outputs=all_outputs,
+            aggregation_strategy=AggregationStrategy.SIMPLE,
+        )
+        return np.unique([result.get("word").strip() for result in results])
+
+# Load keyphrase extraction pipeline
+keyphrase_model_name = "ml6team/keyphrase-extraction-kbir-inspec"
+keyphrase_extractor = KeyphraseExtractionPipeline(model=keyphrase_model_name)
+
+@app.route("/keyphrase-extraction/<input_text>", methods=['POST'])
+@cross_origin()  # Enable CORS for this specific route
+def extract_keyphrases(input_text):
+    global result_keyphrase
+
+    print('Received request for keyphrase extraction. Input text:', input_text)
+
+    # Perform keyphrase extraction on the current input text
+    keyphrases = keyphrase_extractor(input_text)
+    print('Keyphrases extracted:', keyphrases)
+
+    # Convert NumPy array to a list
+    keyphrases_list = keyphrases.tolist()
+
+    print('keyphrases_list', len(keyphrases_list))
+
+    # Return the response with the converted list
+    return jsonify(keyphrases_list)
+
+# Sentiment Analysis
 # List to store to return result
 result = []
 

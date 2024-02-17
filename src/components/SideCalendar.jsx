@@ -43,6 +43,7 @@ const SideCalendar = () => {
   return (
     <>
       <div className='calendar'>
+        <img id="toplogo" src="logo.png" />
         <div className='calendarfc'>
           <ul className="menuUl" style={{ listStyle: 'none' }}>
             <li><button id="menult" onClick={navigateToHome}><div className="menuName"><FontAwesomeIcon icon={faHome} /> Home</div></button></li>
