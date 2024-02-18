@@ -78,11 +78,12 @@ h3 {
     width: 280px;
     height: 40px;
     border-radius: 8px;
-    background-color: #a0726d;
+    /* background-color: #a0726d; */
+    background-color: #431c79;
     color: white;
     font-size: 20px;
     text-align: center;
-    border: white;
+    border: 1px solid white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -321,6 +322,7 @@ textarea:hover {
 .react-calendar {
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: #c9adfd;
 }
 
 .react-calendar,
@@ -332,6 +334,7 @@ textarea:hover {
 .react-calendar__navigation {
     background-color: #c9adfd;
     margin: 0;
+    margin-bottom: 0;
 }
 
 .react-calendar__tile--active {
@@ -349,11 +352,13 @@ textarea:hover {
 .react-calendar * {
     outline: none !important;
     border: none !important;
+    background-color: #c9adfd;
 }
 
 /* Optional: Remove border from the active date tile */
 .react-calendar__tile--active {
     border: none !important;
+    background-color: #c9adfd;
 }
 
 /* Modal */
